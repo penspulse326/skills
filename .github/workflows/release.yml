@@ -1,0 +1,44 @@
+name: Release Skills Manager
+
+on:
+  push:
+    tags:
+      - "v*" # Trigger on tags like v1.0.0
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build Binary
+        run: |
+          cd skill-manager
+          cargo build --release --target ${{ matrix.target }}
+
+      - name: Rename Binary
+        run: |
+          cd skill-manager/target/${{ matrix.target }}/release/
+          mv skill-manager skill-manager-${{ matrix.target }}
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: skill-manager/target/${{ matrix.target }}/release/skill-manager-${{ matrix.target }}
