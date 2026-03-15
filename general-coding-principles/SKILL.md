@@ -1,5 +1,5 @@
 ---
-name: general-coding-rules
+name: general-coding-principles
 description: 程式開發通用規則與執行約束
 ---
 
@@ -34,3 +34,7 @@ description: 程式開發通用規則與執行約束
 - **最小變動原則**：僅修改與任務直接相關的程式碼，嚴禁進行非必要的全域重構。
 - **測試同步**：若目錄中存在 `/tests`，在提交程式碼前必須主動詢問是否需要撰寫或更新對應的測試案例。
 - **清理義務**：任務完成前，必須移除所有調試用資訊（`print`, `console.log`）及遺留的廢棄程式碼片段。
+
+### 6. 任務宣言 (Execution Declaration)
+
+- **自我約束**：每一次回應都必須明確表明：我了解並遵守 `/general-coding-principles` 的所有規則。
